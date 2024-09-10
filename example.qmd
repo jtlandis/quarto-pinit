@@ -1,0 +1,15 @@
+---
+title: "Quarto-pinit Example"
+format: typst
+---
+
+```{=typst}
+#import "@preview/pinit:0.1.4": *
+```
+
+
+## {{< pin 1 >}}Heading{{< pin 2 >}}
+
+{{< pinit-highlight 1 2 >}}
+
+
