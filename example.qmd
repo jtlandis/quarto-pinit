@@ -1,6 +1,8 @@
 ---
 title: "Quarto-pinit Example"
 format: typst
+filters: 
+  - _extensions/quarto-pinit/quarto-pinit-filter.lua
 ---
 
 ```{=typst}
@@ -10,6 +12,10 @@ format: typst
 
 ## {{< pin 1 >}}Heading{{< pin 2 >}}
 
-{{< pinit-highlight 1 2 >}}
+{{< pinit-highlight 1 2 >}} 
 
+::: {.pinit-point-from pin="2"}
 
+some content  hello
+
+:::
