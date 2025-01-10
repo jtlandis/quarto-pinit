@@ -1,4 +1,3 @@
-
 function has_class(el, target_class)
   if (el.classes and #el.classes > 0) then
     for _, class in pairs(el.classes) do
@@ -35,32 +34,35 @@ function wrap_content(el, front, back)
   return content
 end
 
-function wrap_pinit_point_from_span(el) 
+function wrap_pinit_point_from_span(el)
   local typst = "#pinit-point-from("
-    if has_attr(el, "pin") then
-      typst = typst .. el.attributes["pin"] .. ")["
-    else
-      error("pinit-point-from needs a `pin` attribute... `pin=\"1,2\"`")
-      os.exit(1)
-    end
-    return wrap_content(el, pandoc.RawInline("typst", typst),
-                              pandoc.RawInline("typst", "]"))
+  if has_attr(el, "pin") then
+    typst = typst .. el.attributes["pin"] .. ")["
+  else
+    error("pinit-point-from needs a `pin` attribute... `pin=\"1,2\"`")
+    os.exit(1)
+  end
+  return wrap_content(
+    el,
+    pandoc.RawInline("typst", typst),
+    pandoc.RawInline("typst", "]"))
 end
 
-function wrap_pinit_point_from(el) 
+function wrap_pinit_point_from(el)
   local typst = "#pinit-point-from("
-    if has_attr(el, "pin") then
-      typst = typst .. el.attributes["pin"] .. ")["
-    else
-      error("pinit-point-from needs a `pin` attribute... `pin=\"1\"`")
-      os.exit(1)
-    end
-    return wrap_content(el, pandoc.RawBlock("typst", typst),
-                              pandoc.RawBlock("typst", "]"))
+  if has_attr(el, "pin") then
+    typst = typst .. el.attributes["pin"] .. ")["
+  else
+    error("pinit-point-from needs a `pin` attribute... `pin=\"1\"`")
+    os.exit(1)
+  end
+  return wrap_content(
+    el,
+    pandoc.RawBlock("typst", typst),
+    pandoc.RawBlock("typst", "]"))
 end
 
 function Div(el)
-  print(el)
   if has_class(el, "pinit-point-from") then
     el.content = wrap_pinit_point_from(el)
     return el
@@ -69,15 +71,8 @@ end
 
 function Span(el)
   if has_class(el, "pinit-point-from") then
-    print("in span")
-    print(el)
     local new_content = wrap_pinit_point_from_span(el)
-    for i, v in pairs(new_content) do
-      print(v)
-    end
-    --print(new_content)
     el.content = new_content
-    print(el)
     return el
   end
 end
